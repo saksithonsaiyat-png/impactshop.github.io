@@ -2,12 +2,38 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
+    <title>PRO TRADING | แหล่งรวมความรู้และระบบเทรดมาตรฐานสากล</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRO TRADING | Exclusive System</title>
+    
+    <!-- Fonts: Changed to 'Prompt' for a more professional, clean, and trustworthy Thai typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            /* Premium Dark Theme Colors */
+            --bg-base: #07090E;
+            --bg-surface: rgba(18, 22, 31, 0.6);
+            --bg-surface-solid: #12161F;
+            --bg-glass: rgba(255, 255, 255, 0.02);
+            --border-light: rgba(255, 255, 255, 0.06);
+            --border-highlight: rgba(229, 184, 105, 0.2);
+            
+            /* Accents */
+            --gold-primary: #D4AF37;
+            --gold-light: #F3E5AB;
+            --gold-glow: rgba(212, 175, 55, 0.15);
+            --cyan-accent: #00F0FF;
+            --danger: #FF3B30;
+            --success: #34C759;
+            
+            /* Typography */
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,649 +41,1196 @@
         }
 
         body {
-            font-family: 'Kanit', sans-serif;
-            background: #030305;
-            color: #fff;
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* English numbers and specific headers look better in Inter */
+        .price-new, .timer, .m-price {
+            font-family: 'Inter', 'Prompt', sans-serif;
         }
 
-        /* NAVBAR */
-        nav {
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-base); }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold-primary); }
+
+        /* Background Effects */
+        .ambient-light {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            background: rgba(3, 3, 5, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 100%, rgba(0, 240, 255, 0.05) 0%, transparent 40%);
         }
 
-        .nav-content {
+        .grid-pattern {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 20%, transparent 80%);
+            -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 80%);
+        }
+
+        /* Typography Utilities */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gold {
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid transparent;
+        }
+        .navbar.scrolled {
+            background: rgba(7, 9, 14, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 15px 0;
+        }
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        .logo {
-            font-size: 1.3rem;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
         }
-
-        .logo span {
-            color: #E5B869;
+        .brand-icon {
+            color: var(--gold-primary);
         }
-
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 30px;
             align-items: center;
         }
-
         .nav-links a {
-            color: #aaa;
+            color: var(--text-secondary);
             text-decoration: none;
-            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 400;
             transition: color 0.3s;
         }
-
         .nav-links a:hover {
-            color: #E5B869;
+            color: var(--gold-primary);
         }
-
-        .btn-nav {
-            background: linear-gradient(135deg, #E5B869, #F5D08A);
-            color: #000;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-nav:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(229, 184, 105, 0.4);
-        }
-
-        /* FLASH SALE BAR */
+        
+        /* Flash Sale Bar */
         .flash-bar {
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            background: rgba(255, 51, 102, 0.15);
-            border-bottom: 1px solid rgba(255, 51, 102, 0.2);
-            padding: 12px;
+            background: linear-gradient(90deg, rgba(255,59,48,0.1) 0%, rgba(255,59,48,0.15) 50%, rgba(255,59,48,0.1) 100%);
+            border-bottom: 1px solid rgba(255,59,48,0.15);
+            padding: 8px;
             text-align: center;
-            z-index: 99;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 15px;
-            flex-wrap: wrap;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #ffb3b0;
+            margin-top: 70px;
         }
-
-        .flash-bar span {
-            color: #FF3366;
-            font-weight: 600;
-        }
-
         .timer {
-            background: #FF3366;
+            background: var(--danger);
             color: #fff;
-            padding: 6px 16px;
-            border-radius: 20px;
+            padding: 3px 12px;
+            border-radius: 6px;
             font-weight: 700;
             letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(255, 59, 48, 0.2);
         }
 
-        /* HERO SECTION */
+        /* Global Container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+            color: #000;
+            font-family: 'Prompt', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px var(--gold-glow);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.25);
+            background: linear-gradient(135deg, #FFF 0%, var(--gold-primary) 100%);
+        }
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 32px;
+            background: transparent;
+            color: var(--text-primary);
+            font-family: 'Prompt', sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--text-secondary);
+        }
+
+        /* Hero Section */
         .hero {
-            min-height: 100vh;
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--gold-primary);
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+        .hero h1 {
+            font-size: clamp(2.4rem, 5vw, 4.2rem);
+            font-weight: 600;
+            line-height: 1.25;
+            margin-bottom: 24px;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 650px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Trust Section */
+        .trust-section {
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+            background: rgba(18, 22, 31, 0.3);
+            padding: 40px 0;
+            margin-bottom: 80px;
+        }
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            text-align: center;
+        }
+        .trust-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .trust-icon {
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            margin-top: 120px;
-            background: linear-gradient(135deg, rgba(3, 3, 5, 0.9), rgba(3, 3, 5, 0.7)), 
-                        url('https://d2xsxph8kpxj0f.cloudfront.net/310519663433219166/hFFY4vxL7wbBh68e3zLdbi/hero-banner-nBJ9YFqrybaGhNrZGkvgRz.webp');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid var(--border-highlight);
+            border-radius: 12px;
+            color: var(--gold-primary);
         }
-
-        .hero-content h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin-bottom: 20px;
-            line-height: 1.2;
+        .trust-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-primary);
         }
-
-        .hero-content h1 span {
-            background: linear-gradient(135deg, #E5B869, #FFF8E7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-content p {
-            font-size: 1.1rem;
-            color: #aaa;
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        .trust-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
             font-weight: 300;
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 50px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #E5B869, #FFF);
-            color: #000;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(229, 184, 105, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-secondary:hover {
-            border-color: #E5B869;
-            color: #E5B869;
-        }
-
-        .stats {
-            display: flex;
-            gap: 3rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .stat {
+        /* Section Headers */
+        .section-header {
             text-align: center;
+            margin-bottom: 60px;
         }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
+        .section-tag {
+            color: var(--cyan-accent);
             font-size: 0.9rem;
-            color: #888;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
         }
-
-        /* SECTION TITLE */
         .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin: 60px 0 40px;
-            font-weight: 700;
+            font-size: 2.2rem;
+            font-weight: 600;
+            line-height: 1.3;
         }
 
-        .section-title span {
-            color: #E5B869;
+        /* Benefits Section */
+        .benefits-section {
+            padding: 60px 0 100px;
         }
-
-        /* TRUST SECTION */
-        .trust-section {
-            padding: 60px 0;
+        .benefits-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
         }
-
-        .trust-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 30px;
-            border-radius: 15px;
-            transition: all 0.3s;
+        .benefit-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            padding: 40px 30px;
+            border-radius: 16px;
+            transition: transform 0.3s;
         }
-
-        .trust-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(229, 184, 105, 0.2);
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-highlight);
+            background: rgba(255, 255, 255, 0.03);
         }
-
-        .trust-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+        .b-icon {
+            color: var(--gold-primary);
+            margin-bottom: 20px;
         }
-
-        .trust-value {
-            font-weight: 700;
+        .b-title {
             font-size: 1.2rem;
-            margin-bottom: 5px;
+            font-weight: 500;
+            margin-bottom: 12px;
         }
-
-        .trust-label {
+        .b-desc {
             font-size: 0.95rem;
-            color: #aaa;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
         }
 
-        /* PRODUCTS SECTION */
-        .products-section {
-            padding: 60px 0;
+        /* Products Section */
+        .shop-section {
+            padding: 80px 0 120px;
+            position: relative;
         }
-
-        .grid {
+        .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
-        .product-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 15px;
+        /* Premium Product Card */
+        .card {
+            background: var(--bg-surface-solid);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
             overflow: hidden;
-            transition: all 0.4s;
-            cursor: pointer;
             display: flex;
             flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
         }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(229, 184, 105, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-highlight);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px var(--gold-glow);
         }
-
-        .product-img {
+        .card-img-wrapper {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+        .card-img-wrapper img {
             width: 100%;
-            height: 200px;
+            height: 100%;
             object-fit: cover;
-            transition: transform 0.4s;
+            transition: transform 0.7s ease;
         }
-
-        .product-card:hover .product-img {
+        .card:hover .card-img-wrapper img {
             transform: scale(1.05);
         }
-
-        .product-body {
-            padding: 20px;
-            flex-grow: 1;
+        .card-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--bg-surface-solid) 0%, transparent 60%);
+        }
+        .badge-hot {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--gold-primary);
+            color: var(--gold-light);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .card-content {
+            padding: 24px;
             display: flex;
             flex-direction: column;
-        }
-
-        .product-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .product-desc {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-bottom: 15px;
             flex-grow: 1;
+            position: relative;
+            z-index: 2;
+            margin-top: -30px; 
+        }
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            font-weight: 300;
+            line-height: 1.5;
         }
-
-        .product-price {
+        .price-container {
             display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 15px;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 24px;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-light);
         }
-
         .price-new {
             font-size: 1.8rem;
             font-weight: 700;
-            color: #E5B869;
+            color: var(--gold-primary);
+            letter-spacing: -0.5px;
         }
-
         .price-old {
             font-size: 1rem;
-            color: #666;
+            color: var(--text-muted);
             text-decoration: line-through;
+            font-weight: 400;
         }
 
-        .btn-buy {
-            width: 100%;
-            padding: 12px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(18, 22, 31, 0.4) 50%, transparent 100%);
         }
-
-        .product-card:hover .btn-buy {
-            background: #E5B869;
-            border-color: #E5B869;
-            color: #000;
-        }
-
-        /* TESTIMONIALS */
-        .testimonials-section {
-            padding: 60px 0;
-        }
-
-        .testimonials-grid {
+        .test-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
         }
-
-        .testimonial-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 25px;
-            border-radius: 15px;
+        .test-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-light);
+            padding: 30px;
+            border-radius: 16px;
         }
-
         .stars {
-            color: #E5B869;
+            color: var(--gold-primary);
             margin-bottom: 15px;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            letter-spacing: 2px;
         }
-
-        .testimonial-text {
-            color: #aaa;
+        .test-text {
             font-size: 0.95rem;
+            color: var(--text-secondary);
             margin-bottom: 20px;
-            line-height: 1.6;
-            font-style: italic;
+            line-height: 1.7;
+            font-weight: 300;
         }
-
-        .author {
+        .test-user {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-
-        .avatar {
+        .test-avatar {
             width: 40px;
             height: 40px;
+            background: var(--border-light);
             border-radius: 50%;
-            background: linear-gradient(135deg, #E5B869, rgba(229, 184, 105, 0.3));
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #000;
-            font-weight: 700;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .test-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
         }
 
-        .author-name {
-            font-weight: 600;
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border-light);
+            padding: 60px 0 30px;
+            background: #050608;
+            margin-top: 50px;
         }
-
-        .author-role {
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        /* FOOTER */
-        footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px 0;
-            margin-top: 60px;
-        }
-
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
         }
-
-        .footer-section h4 {
-            font-size: 1rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .f-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: var(--text-primary);
         }
-
-        .footer-section ul {
+        .f-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        .f-links {
             list-style: none;
         }
-
-        .footer-section ul li {
+        .f-links li {
             margin-bottom: 10px;
         }
-
-        .footer-section a {
-            color: #888;
+        .f-links a {
+            color: var(--text-secondary);
             text-decoration: none;
-            cursor: pointer;
+            font-size: 0.9rem;
             transition: color 0.3s;
+            font-weight: 300;
         }
-
-        .footer-section a:hover {
-            color: #E5B869;
+        .f-links a:hover {
+            color: var(--gold-primary);
         }
-
-        .footer-bottom {
-            text-align: center;
-            color: #666;
-            font-size: 0.85rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .disclaimer {
+            border-top: 1px solid var(--border-light);
             padding-top: 20px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.5;
         }
 
-        /* MODAL */
-        .modal {
-            display: none;
+        /* Premium Modal Checkout */
+        .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            align-items: center;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: flex;
             justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
             padding: 20px;
         }
-
-        .modal.active {
-            display: flex;
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
-
-        .modal-box {
-            background: #0D0D12;
+        .modal-content {
+            background: var(--bg-surface-solid);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            max-width: 500px;
+            border-radius: 20px;
             width: 100%;
+            max-width: 850px;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
         }
-
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+        
         .close-btn {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            width: 35px;
-            height: 35px;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-light);
+            color: var(--text-secondary);
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            color: #fff;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            z-index: 10;
-        }
-
-        .close-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .modal-header {
-            padding: 30px 25px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .modal-price {
-            font-size: 2rem;
-            color: #E5B869;
-            font-weight: 700;
-        }
-
-        .modal-body {
-            padding: 25px;
-        }
-
-        .modal-desc {
-            color: #aaa;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .features-list {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-
-        .features-list li {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
-            color: #aaa;
-            font-size: 0.95rem;
-        }
-
-        .features-list li:before {
-            content: "✓";
-            color: #E5B869;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .qr-section {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .qr-section p {
-            color: #aaa;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-        }
-
-        .qr-box {
-            background: #fff;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 180px;
+            transition: 0.3s;
+            z-index: 10;
+        }
+        .close-btn:hover {
+            background: var(--danger);
+            color: #fff;
+            border-color: var(--danger);
         }
 
-        .qr-box img {
-            max-width: 100%;
-            max-height: 160px;
+        /* Modal Left */
+        .modal-left {
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, transparent 100%);
+            border-right: 1px solid var(--border-light);
         }
-
-        .btn-line {
-            width: 100%;
-            padding: 12px;
-            background: rgba(6, 199, 85, 0.1);
-            border: 1px solid rgba(6, 199, 85, 0.3);
-            color: #06C755;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+        .m-tag {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold-primary);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
             margin-bottom: 15px;
         }
+        .m-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 15px;
+        }
+        .m-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+        .m-features {
+            list-style: none;
+        }
+        .m-features li {
+            font-size: 0.95rem;
+            color: #E2E8F0;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-weight: 300;
+        }
+        .m-features svg {
+            color: var(--gold-primary);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
 
-        .btn-line:hover {
-            background: #06C755;
+        /* Modal Right */
+        .modal-right {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        .checkout-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+        .m-price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--gold-primary);
+        }
+        .qr-wrapper {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 16px;
+            width: 220px;
+            height: 220px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .qr-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, var(--gold-primary), transparent, var(--gold-primary));
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .qr-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .btn-line {
+            width: 100%;
+            padding: 14px;
+            background: #00B900;
             color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
         }
-
-        .qr-line {
+        .btn-line:hover {
+            background: #009900;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 185, 0, 0.3);
+        }
+        .line-qr-container {
             display: none;
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .line-qr-container .qr-wrapper {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 10px;
         }
 
-        .qr-line.show {
-            display: block;
+        /* Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        /* RESPONSIVE */
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .trust-grid { grid-template-columns: repeat(2, 1fr); }
+            .benefits-grid { grid-template-columns: 1fr; }
+            .test-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            .modal-content { grid-template-columns: 1fr; max-width: 500px; }
+            .modal-left { border-right: none; border-bottom: 1px solid var(--border-light); padding: 30px; }
+            .modal-right { padding: 30px; }
+        }
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .section-title {
-                font-size: 1.8rem;
-            }
-
-            .stats {
-                gap: 1.5rem;
-            }
-
-            .stat-value {
-                font-size: 1.8rem;
-            }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .hero-cta { flex-direction: column; }
+            .btn-primary, .btn-outline { width: 100%; }
         }
     </style>
 </head>
 <body>
-    <!-- NAVBAR -->
-    <nav>
+
+    <!-- Ambient Background Effects -->
+    <div class="ambient-light"></div>
+    <div class="grid-pattern"></div>
+
+    <!-- Professional Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand">
+                <svg class="brand-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                PRO TRADING
+            </a>
+            <div class="nav-links">
+                <a href="#benefits">ข้อดีของเรา</a>
+                <a href="#systems">ระบบเทรด</a>
+                <a href="#testimonials">รีวิวจากผู้ใช้งาน</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Sale Bar -->
+    <div class="flash-bar">
+        <span>⚡ ข้อเสนอพิเศษสำหรับคุณจะหมดเวลาใน:</span>
+        <div class="timer" id="timeDisplay">00:00:00</div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero container reveal">
+        <div class="hero-badge">
+            <span style="display:inline-block; width:8px; height:8px; background:var(--gold-primary); border-radius:50%; box-shadow: 0 0 8px var(--gold-primary);"></span>
+            กลยุทธ์การเทรดระดับมืออาชีพ
+        </div>
+        <h1>ยกระดับการเทรดของคุณด้วย<br><span class="text-gold">ระบบที่มืออาชีพเลือกใช้</span></h1>
+        <p>ทำความเข้าใจตลาดอย่างลึกซึ้งด้วยระบบเทรดที่เน้นเหตุผล ไม่ต้องเดาทาง เราได้รวบรวมเทคนิคที่ใช้งานได้จริง พร้อมคำแนะนำที่เข้าใจง่าย เพื่อให้คุณเทรดได้อย่างมั่นใจและยั่งยืน</p>
+        <div class="hero-cta">
+            <button class="btn-primary" onclick="document.getElementById('systems').scrollIntoView();">
+                ดูแพ็กเกจทั้งหมด
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:8px"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+            <button class="btn-outline" onclick="document.getElementById('benefits').scrollIntoView();">ทำความรู้จักเรา</button>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust-section reveal">
+        <div class="container trust-grid">
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="trust-title">ชำระเงินปลอดภัย</div>
+                <div class="trust-desc">ทำรายการผ่านระบบธนาคาร</div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <div class="trust-title">รับเนื้อหาทันที</div>
+                <div class="trust-desc">เข้าถึงบทเรียนได้อัตโนมัติ</div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </div>
+                <div class="trust-title">ชุมชนเทรดเดอร์</div>
+                <div class="trust-desc">แลกเปลี่ยนความรู้และเติบโต</div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <div class="trust-title">ระบบที่ผ่านการทดสอบ</div>
+                <div class="trust-desc">ใช้งานได้จริงในตลาดปัจจุบัน</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section container reveal">
+        <div class="section-header">
+            <span class="section-tag">ทำไมถึงควรเลือกเรา</span>
+            <h2 class="section-title">เครื่องมือที่จะช่วยให้คุณ<span class="text-gradient">พัฒนาการเทรด</span></h2>
+        </div>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <svg class="b-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                <h3 class="b-title">เนื้อหาที่เข้าใจง่ายและมีเหตุผล</h3>
+                <p class="b-desc">เรียนรู้โครงสร้างตลาดที่แท้จริง ไม่ใช่แค่การท่องจำรูปแบบกราฟ แต่เป็นการทำความเข้าใจจิตวิทยาและเหตุผลเบื้องหลังการเคลื่อนไหวของราคาแบบค่อยเป็นค่อยไป</p>
+            </div>
+            <div class="benefit-card">
+                <svg class="b-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <h3 class="b-title">ประหยัดเวลาลองผิดลองถูก</h3>
+                <p class="b-desc">เราสรุปแนวทางมาให้แล้วอย่างเป็นระบบ ช่วยลดเวลาในการงมหาเส้นทางด้วยตัวเอง เพื่อให้คุณมีเวลาไปโฟกัสกับการฝึกฝนและใช้ชีวิต</p>
+            </div>
+            <div class="benefit-card">
+                <svg class="b-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                <h3 class="b-title">เน้นการบริหารความเสี่ยง</h3>
+                <p class="b-desc">เราไม่ขายฝันเรื่องกำไรมหาศาล แต่ระบบของเราให้ความสำคัญกับการจำกัดความเสี่ยง (Risk Management) เพื่อให้คุณเทรดได้อย่างสบายใจและปกป้องเงินทุน</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="systems" class="shop-section container">
+        <div class="section-header reveal">
+            <span class="section-tag">แพ็กเกจของเรา</span>
+            <h2 class="section-title">เลือก<span class="text-gold">รูปแบบการเรียนรู้</span>ที่เหมาะกับคุณ</h2>
+        </div>
+        
+        <div class="products-grid" id="productGrid">
+            <!-- Dynamic Products Injected via JS -->
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials reveal">
         <div class="container">
-            <div class="nav-content">
-                <div class="logo">PRO<span>TRADING</span></div>
-                <div class="nav-links">
-                    <a onclick="scrollTo('products')">ระบบเทรด</a>
-                    <a onclick="scrollTo('testimonials')">รีวิว</a>
-                    <a onclick="scrollTo('footer')">ติดต่อ</a>
-                    <button class="btn-nav" onclick="scrollTo('products')">ดูสินค
-(Content truncated due to size limit. Use line ranges to read remaining content)
+            <div class="section-header">
+                <h2 class="section-title">ความรู้สึกจาก<span class="text-gradient">เพื่อนเทรดเดอร์</span></h2>
+            </div>
+            <div class="test-grid">
+                <div class="test-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="test-text">"เนื้อหาช่วยปรับมุมมองการเทรดผมไปเยอะเลยครับ ทำให้เข้าใจเหตุผลเบื้องหลังกราฟมากขึ้น ว่าทำไมราคาถึงชอบวิ่งมากิน Stop loss ก่อน พอเข้าใจตรงนี้ก็เทรดได้มั่นใจขึ้น ไม่แพนิกเหมือนเมื่อก่อนครับ"</p>
+                    <div class="test-user">
+                        <div class="test-avatar">K</div>
+                        <span class="test-name">Krit T.</span>
+                    </div>
+                </div>
+                <div class="test-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="test-text">"ชอบบรรยากาศในกลุ่ม Discord มากครับ เป็นกันเองและได้แลกเปลี่ยนมุมมองกับพี่ๆ คนอื่น เนื้อหา E-book ก็อ่านเข้าใจง่าย เอาไปปรับใช้กับการเทรดประจำวันได้จริงครับ คุ้มค่ามาก"</p>
+                    <div class="test-user">
+                        <div class="test-avatar">P</div>
+                        <span class="test-name">Pongsakorn M.</span>
+                    </div>
+                </div>
+                <div class="test-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="test-text">"ระบบนี้ตอบโจทย์คนทำงานประจำอย่างผมมากครับ มีเวลาดูกราฟแค่วันละ 1-2 ชั่วโมงก็สามารถหาจังหวะเข้าเทรดที่ชัดเจนได้ ไม่ต้องกังวลเรื่องการถือออเดอร์ข้ามคืนให้เสียสุขภาพจิตด้วย"</p>
+                    <div class="test-user">
+                        <div class="test-avatar">N</div>
+                        <span class="test-name">Nattapong S.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <a href="#" class="brand" style="margin-bottom: 20px;">
+                        <svg class="brand-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                        PRO TRADING
+                    </a>
+                    <p class="f-text">เราเชื่อว่าการเทรดที่ยั่งยืนเริ่มต้นจากความเข้าใจที่ถูกต้อง เราพร้อมเป็นส่วนหนึ่งในการสนับสนุนและช่วยพัฒนาทักษะการเทรดของคุณให้ดียิ่งขึ้น</p>
+                </div>
+                <div>
+                    <h4 class="f-title">เมนูด่วน</h4>
+                    <ul class="f-links">
+                        <li><a href="#systems">ระบบเทรดทั้งหมด</a></li>
+                        <li><a href="#benefits">ทำไมถึงควรเลือกเรา</a></li>
+                        <li><a href="#testimonials">รีวิวจากผู้ใช้งาน</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="f-title">ติดต่อเรา</h4>
+                    <ul class="f-links">
+                        <li><a href="#">พูดคุยผ่าน LINE แอดมิน</a></li>
+                        <li><a href="#">คำถามที่พบบ่อย (FAQ)</a></li>
+                        <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="disclaimer">
+                <p><strong>คำเตือนความเสี่ยง:</strong> การลงทุนมีความเสี่ยง ผู้ลงทุนควรศึกษาข้อมูลและทำความเข้าใจลักษณะสินค้า เงื่อนไขผลตอบแทน และความเสี่ยงก่อนตัดสินใจลงทุน ผลการดำเนินงานในอดีตมิได้เป็นสิ่งยืนยันถึงผลการดำเนินงานในอนาคต ข้อมูลบนเว็บไซต์นี้เป็นเพียงการแบ่งปันความรู้และประสบการณ์ทางการศึกษา ไม่ใช่คำแนะนำทางการเงิน</p>
+                <p style="margin-top:10px;">&copy; 2024 PRO TRADING. สงวนลิขสิทธิ์ทั้งหมด</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Premium Checkout Modal -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            
+            <!-- Left Pane: Info -->
+            <div class="modal-left">
+                <span class="m-tag">รายละเอียดแพ็กเกจ</span>
+                <h3 class="m-title" id="mTitle">Product Name</h3>
+                <p class="m-desc" id="mDescText">รายละเอียดสินค้า</p>
+                
+                <h4 style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 15px; font-weight: 500;">สิ่งที่คุณจะได้รับ</h4>
+                <ul class="m-features" id="mFeaturesList">
+                    <!-- Dynamic Features -->
+                </ul>
+            </div>
+
+            <!-- Right Pane: Payment -->
+            <div class="modal-right">
+                <div class="checkout-header">
+                    <div class="checkout-label">ยอดชำระสุทธิ</div>
+                    <div class="m-price" id="mPrice">฿0</div>
+                </div>
+                
+                <div class="qr-wrapper">
+                    <img src="QR.jpg" alt="PromptPay QR">
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; font-weight: 300;">สแกนเพื่อชำระเงินผ่านแอปธนาคารของคุณได้ทันที</p>
+
+                <button class="btn-line" onclick="toggleLineQR()">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.114.281.072.717.035.993-.05.376-.32 1.558-.393 1.884-.118.52-.601 2.943 2.583 1.606 3.184-1.337 8.528-5.018 10.669-8.498C23.513 14.372 24 12.441 24 10.304zM7.564 12.871H4.136a.44.44 0 0 1-.439-.44V7.61c0-.242.197-.44.439-.44h3.428a.44.44 0 0 1 .439.44v.936a.44.44 0 0 1-.439.44H5.513v1.5h2.051a.44.44 0 0 1 .439.439v.936a.44.44 0 0 1-.439.41zm3.879.032a.434.434 0 0 1-.439-.44V7.61a.44.44 0 0 1 .439-.44h.936a.44.44 0 0 1 .439.44v4.851a.44.44 0 0 1-.439.44h-.936zm4.618-2.651h-1.63v2.211a.44.44 0 0 1-.439.44h-.936a.44.44 0 0 1-.439-.44V7.61c0-.242.197-.44.439-.44h.936a.44.44 0 0 1 .439.44v2.21h1.63V7.61c0-.242.197-.44.439-.44h.936a.44.44 0 0 1 .439.44v4.851a.44.44 0 0 1-.439.44h-.936a.44.44 0 0 1-.439-.44v-2.211zm4.492 1.275c0 .242-.197.44-.439.44h-2.184a.44.44 0 0 1-.439-.44V7.61c0-.242.197-.44.439-.44h2.184a.44.44 0 0 1 .439.44v.936a.44.44 0 0 1-.439.44h-1.248v.564h1.248a.44.44 0 0 1 .439.439v.936a.44.44 0 0 1-.439.41h-1.248v.564h1.248a.44.44 0 0 1 .439.439v.936z"/></svg>
+                    แจ้งสลิปผ่าน LINE แอดมิน
+                </button>
+                
+                <div class="line-qr-container" id="lineQRBox">
+                    <div class="qr-wrapper" style="background: #f8f9fa;">
+                        <img src="qrline.jpg" alt="LINE QR">
+                    </div>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">หรือเพิ่มเพื่อน @firstzy77</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Navbar Scroll Effect ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // --- Persistent Timer Logic ---
+        const DURATION = 6 * 60 * 60 * 1000;
+        let endTime = localStorage.getItem('premiumSaleEndTime');
+
+        if (!endTime || Date.now() > parseInt(endTime)) {
+            endTime = Date.now() + DURATION;
+            localStorage.setItem('premiumSaleEndTime', endTime);
+        } else {
+            endTime = parseInt(endTime);
+        }
+
+        const timeDisplay = document.getElementById('timeDisplay');
+        
+        setInterval(() => {
+            const t = endTime - Date.now();
+            if (t <= 0) {
+                timeDisplay.innerText = "00:00:00";
+                return;
+            }
+            const h = String(Math.floor(t / 3600000)).padStart(2, '0');
+            const m = String(Math.floor(t / 60000) % 60).padStart(2, '0');
+            const s = String(Math.floor(t / 1000) % 60).padStart(2, '0');
+            timeDisplay.innerText = `${h}:${m}:${s}`;
+        }, 1000);
+
+        // --- UPDATED PRODUCT DATA ---
+        const products = [
+            { 
+                id: 1,
+                title: "ICT Trading System", 
+                oldPrice: 199, price: 129, img: "ict.jpg",
+                desc: "ทำความเข้าใจการเคลื่อนไหวของราคาระดับโครงสร้างใหญ่ เรียนรู้วิธีคิดและมุมมองของสถาบันการเงิน เพื่อหาจุดเข้าเทรดที่ปลอดภัย",
+                features: [
+                    "ปรับมุมมองเรื่องโครงสร้างราคา (Market Structure)",
+                    "ทำความเข้าใจ Order Block, FVG เบื้องต้น",
+                    "เรียนรู้พฤติกรรมการล่าสภาพคล่อง (Liquidity Sweep)",
+                    "ฝึกหาจังหวะเข้าเทรดที่มีเหตุผลรองรับ"
+                ]
+            },
+            { 
+                id: 2,
+                title: "Break Block M1 only", 
+                oldPrice: 299, price: 179, img: "smc.jpg",
+                desc: "เทคนิคการเทรดระยะสั้นที่ออกแบบมาเพื่อคนมีเวลาจำกัด เน้นหาจังหวะเข้าทำกำไรที่ชัดเจน จบในวัน ไม่ต้องถือข้ามคืน",
+                features: [
+                    "เทคนิคคัดกรองพฤติกรรมราคาระยะสั้น",
+                    "ระบบเทรดที่เน้นจบในวัน (Day Trade & Scalping)",
+                    "แนะนำการวาง Stop Loss ให้เหมาะสม ปลอดภัย",
+                    "เหมาะกับเทรดเดอร์ที่ทำงานประจำ มีเวลาน้อย"
+                ]
+            },
+            { 
+                id: 3,
+                title: "MSNR Strategy", 
+                oldPrice: 249, price: 149, img: "msnr1.jpg",
+                desc: "เทคนิคการมองแนวรับ-แนวต้านที่มีความแม่นยำ (Malaysian SNR) ช่วยให้คุณเข้าใจพฤติกรรมการกลับตัวของราคาได้ดีขึ้น",
+                features: [
+                    "วิธีกำหนดโซนสำคัญในกราฟอย่างถูกต้อง",
+                    "ฝึกอ่านพฤติกรรมการปฏิเสธราคา (Price Rejection)",
+                    "การนำ MSNR มาใช้ร่วมกับการวิเคราะห์แท่งเทียน",
+                    "ลดข้อผิดพลาดในการเข้าออเดอร์แล้วโดนลาก"
+                ]
+            },
+            { 
+                id: 4,
+                title: "Course + Ebook (ฉบับเต็ม)", 
+                oldPrice: 599, price: 499, img: "ceb.jpg",
+                desc: "แพ็กเกจที่ครอบคลุมที่สุด เหมาะสำหรับผู้ที่ต้องการเรียนรู้ตั้งแต่พื้นฐานไปจนถึงการประยุกต์ใช้จริง พร้อมเนื้อหาวิดีโอให้ทบทวน",
+                features: [
+                    "คอร์สวิดีโออธิบายเป็นขั้นเป็นตอน เข้าใจง่าย",
+                    "E-Book สรุปเนื้อหาสำคัญพร้อมภาพประกอบ",
+                    "ตัวอย่างการนำเทคนิคไปปรับใช้หน้างานจริง",
+                    "สามารถทบทวนเนื้อหาได้ตลอด ไม่มีวันหมดอายุ"
+                ]
+            },
+            { 
+                id: 5,
+                title: "Elite E-Book Vault (Discord VIP)", 
+                oldPrice: 599, price: 399, img: "ebook-vault.jpg",
+                desc: "เข้าร่วมคอมมูนิตี้ของเราใน Discord พร้อมรับสิทธิ์เข้าถึงคลัง E-Book และบทความเทคนิคการเทรดที่อัปเดตอย่างต่อเนื่อง",
+                features: [
+                    "สิทธิ์เข้ากลุ่ม Discord พูดคุยแลกเปลี่ยนมุมมอง",
+                    "รวม E-book สรุปเทคนิคการเทรดที่อ่านเข้าใจง่าย",
+                    "บทความอัปเดตความรู้ใหม่ๆ เป็นประจำ",
+                    "จ่ายครั้งเดียว เข้าร่วมชุมชนเทรดเดอร์ได้ตลอดไป"
+                ]
+            }
+        ];
+
+        // --- Render Premium Cards ---
+        const grid = document.getElementById('productGrid');
+
+        products.forEach((p, index) => {
+            const cardHTML = `
+                <div class="card reveal" style="transition-delay: ${index * 0.1}s">
+                    <div class="card-img-wrapper">
+                        <div class="badge-hot"><span style="color:var(--gold-light)">★</span> แนะนำ</div>
+                        <img src="${p.img}" alt="${p.title}" loading="lazy">
+                        <div class="card-img-overlay"></div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">${p.title}</h3>
+                        <p class="card-desc">${p.desc}</p>
+                        <div class="price-container">
+                            <span class="price-new">฿${p.price}</span>
+                            <span class="price-old">฿${p.oldPrice}</span>
+                        </div>
+                        <button class="btn-primary" style="width: 100%; padding: 12px;" onclick="openModal(${p.id})">
+                            รับสิทธิ์เข้าใช้งาน
+                        </button>
+                    </div>
+                </div>
+            `;
+            grid.insertAdjacentHTML('beforeend', cardHTML);
+        });
+
+        // --- Modal Logic ---
+        const modal = document.getElementById('checkoutModal');
+        const lineQRBox = document.getElementById('lineQRBox');
+        
+        const checkIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
+        function openModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if(!product) return;
+
+            document.getElementById('mTitle').innerText = product.title;
+            document.getElementById('mPrice').innerText = "฿" + product.price;
+            document.getElementById('mDescText').innerText = product.desc;
+            
+            const featuresList = document.getElementById('mFeaturesList');
+            featuresList.innerHTML = ''; 
+            product.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.innerHTML = `${checkIcon} <span>${feature}</span>`;
+                featuresList.appendChild(li);
+            });
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            lineQRBox.style.display = "none"; 
+            document.body.style.overflow = 'auto';
+        }
+
+        function toggleLineQR() {
+            lineQRBox.style.display = lineQRBox.style.display === "block" ? "none" : "block";
+            if(lineQRBox.style.display === "block") {
+                setTimeout(() => {
+                    const rightPane = document.querySelector('.modal-right');
+                    rightPane.scrollTop = rightPane.scrollHeight;
+                }, 100);
+            }
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        // --- Scroll Animations ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    </script>
+</body>
+</html>
+
+
